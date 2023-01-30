@@ -20,6 +20,26 @@ services:
 
   # Add more containers below (nginx, postgres, etc.)
 
+  # next-wp container
+  next-wp:
+    container_name: next-wp
+    build:
+      context: ./next-wp
+      dockerfile: dev.Dockerfile
+    environment:
+      ENV_VARIABLE: ${ENV_VARIABLE}
+      NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+    env_file:
+      - .env.next-wp.local
+    volumes:
+      - ./next-wp/src:/app/src
+      - ./next-wp/public:/app/public
+    restart: always
+    ports:
+      - 3010:3010
+    networks:
+      - my_network
+
 # Define a network, which allows containers to communicate
 # with each other, by using their container name as a hostname
 networks:
